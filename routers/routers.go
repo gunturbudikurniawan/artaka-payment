@@ -2,6 +2,7 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/naufalihsan/artaka-payment/disburse"
 	"github.com/naufalihsan/artaka-payment/qris"
 	"github.com/naufalihsan/artaka-payment/va"
 )
@@ -21,4 +22,13 @@ func RouterVA(api *gin.RouterGroup) {
 	api.POST("/callback", va.VACallback)
 	api.POST("/update/callback", va.VAUpdateCallback)
 	api.POST("/payment", va.GetPaymentVA)
+}
+
+func RouterDisbursement(api *gin.RouterGroup) {
+	api.GET("/banks", disburse.GetAvailableBanks)
+	api.POST("/create", disburse.CreateDisbursement)
+	api.POST("/get", disburse.GetDisbursementByExternalID)
+	api.POST("/callback", disburse.DisbursementCallback)
+	api.POST("/batch/create", disburse.CreateBatchDisbursement)
+	api.POST("/batch/callback", disburse.BatchDisbursementCallback)
 }

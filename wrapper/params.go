@@ -1,5 +1,7 @@
 package wrapper
 
+import "github.com/xendit/xendit-go/disbursement"
+
 type QRIS struct {
 	ID          string  `json:"id"`
 	ExternalID  string  `json:"external_id"`
@@ -72,4 +74,38 @@ type VAUpdateCallbackParam struct {
 	ID              string `json:"id" validate:"required"`
 	IsSingleUse     bool   `json:"is_single_use" validate:"required"`
 	Status          string `json:"status" validate:"required"`
+}
+
+type DisbursementCallback struct {
+	IsInstant               string   `json:"is_instant" validate:"required"`
+	UserID                  string   `json:"user_id" validate:"required"`
+	ExternalID              string   `json:"external_id" validate:"required"`
+	Amount                  float64  `json:"amount" validate:"required"`
+	BankCode                string   `json:"bank_code" validate:"required"`
+	AccountHolderName       string   `json:"account_holder_name" validate:"required"`
+	DisbursementDescription string   `json:"disbursement_description" validate:"required"`
+	Status                  string   `json:"status" validate:"required"`
+	FailureCode             string   `json:"failure_code,omitempty"`
+	ID                      string   `json:"id" validate:"required"`
+	EmailTo                 []string `json:"email_to,omitempty"`
+	EmailCc                 []string `json:"email_cc,omitempty"`
+	EmailBcc                []string `json:"email_bcc,omitempty"`
+}
+
+type BatchDisbursementCallback struct {
+	Created              string                        `json:"created" validate:"required"`
+	Updated              string                        `json:"updated" validate:"required"`
+	Reference            string                        `json:"reference" validate:"required"`
+	TotalUploadedCount   float64                       `json:"total_uploaded_count" validate:"required"`
+	TotalUploadedAmount  float64                       `json:"total_uploaded_amount" validate:"required"`
+	ApprovedAt           string                        `json:"approved_at" validate:"required"`
+	ApproverID           string                        `json:"approver_id" validate:"required"`
+	Status               string                        `json:"status" validate:"required"`
+	ID                   string                        `json:"id" validate:"required"`
+	UserID               string                        `json:"user_id" validate:"required"`
+	TotalErrorCount      float64                       `json:"total_error_count" validate:"required"`
+	TotalErrorAmount     float64                       `json:"total_error_amount" validate:"required"`
+	TotalDisbursedCount  float64                       `json:"total_disbursed_count" validate:"required"`
+	TotalDisbursedAmount float64                       `json:"total_disbursed_amount" validate:"required"`
+	Disbursements        disbursement.DisbursementItem `json:"disburse,omitempty"`
 }

@@ -1,6 +1,7 @@
 package qris
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/naufalihsan/artaka-payment/adapter"
@@ -64,6 +65,9 @@ func PaymentStatusCallback(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	log, _ := json.Marshal(payload)
+	fmt.Println(string(log))
 
 	adapter.GetDB().Create(&models.Qris{
 		Event:      payload.Event,

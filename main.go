@@ -29,5 +29,10 @@ func main() {
 		routers.RouterVA(va)
 	}
 
+	disburse := payment.Group("/disbursement")
+	{
+		routers.RouterDisbursement(disburse)
+	}
+
 	r.Run(":8005")
 }
