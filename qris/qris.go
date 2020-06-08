@@ -28,7 +28,12 @@ func CreateQRIS(c *gin.Context) {
 		log.Fatal("Error generate file")
 	}
 
-	c.JSON(http.StatusOK, gin.H{"imgUrl": filename})
+	result := wrapper.CreateQRISResponse{
+		QRIS:     response,
+		Filename: filename,
+	}
+
+	c.JSON(http.StatusOK, result)
 
 }
 
