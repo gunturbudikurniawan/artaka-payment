@@ -1,7 +1,6 @@
 package disburse
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/naufalihsan/artaka-payment/adapter"
 	"github.com/naufalihsan/artaka-payment/wrapper"
@@ -17,9 +16,11 @@ func CreateBatchDisbursement(c *gin.Context) {
 	}
 
 	client := adapter.GetXenditCli()
-	response, err := client.Disbursement.CreateBatch(&payload)
-	if err != nil {
-		fmt.Println(err.Message)
+	response, error := client.Disbursement.CreateBatch(&payload)
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
 	}
 
 	c.JSON(http.StatusOK, response)

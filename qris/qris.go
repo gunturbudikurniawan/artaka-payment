@@ -8,7 +8,6 @@ import (
 	"github.com/naufalihsan/artaka-payment/models"
 	"github.com/naufalihsan/artaka-payment/wrapper"
 	"github.com/skip2/go-qrcode"
-	"log"
 	"net/http"
 )
 
@@ -20,12 +19,18 @@ func CreateQRIS(c *gin.Context) {
 	}
 
 	client := adapter.GetQRISCli()
-	response, _ := client.QRIS.CreateQRIS(&payload)
+	response, error := client.QRIS.CreateQRIS(&payload)
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
+	}
 
 	filename := fmt.Sprintf("static/%s", response.ID)
 	err := qrcode.WriteFile(response.QRString, qrcode.Medium, 256, filename)
 	if err != nil {
-		log.Fatal("Error generate file")
+		c.JSON(http.StatusOK, err)
+		return
 	}
 
 	result := wrapper.CreateQRISResponse{
@@ -45,7 +50,12 @@ func GetQRISByExternalID(c *gin.Context) {
 	}
 
 	client := adapter.GetQRISCli()
-	response, _ := client.QRIS.GetQRIS(&payload)
+	response, error := client.QRIS.GetQRIS(&payload)
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
+	}
 
 	c.JSON(http.StatusOK, response)
 }
@@ -58,7 +68,12 @@ func SimulatePaymentWithQRIS(c *gin.Context) {
 	}
 
 	client := adapter.GetQRISCli()
-	response, _ := client.QRIS.SimulatePayment(&payload)
+	response, error := client.QRIS.SimulatePayment(&payload)
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
+	}
 
 	c.JSON(http.StatusOK, response)
 }

@@ -11,7 +11,13 @@ import (
 
 func GetAvailableBanks(c *gin.Context) {
 	client := adapter.GetXenditCli()
-	response, _ := client.VirtualAccount.GetAvailableBanks()
+	response, error := client.VirtualAccount.GetAvailableBanks()
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
+	}
+
 	c.JSON(http.StatusOK, response)
 }
 
@@ -21,8 +27,14 @@ func CreateFixedVA(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	client := adapter.GetXenditCli()
-	response, _ := client.VirtualAccount.CreateFixedVA(&payload)
+	response, error := client.VirtualAccount.CreateFixedVA(&payload)
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
+	}
 
 	c.JSON(http.StatusOK, response)
 }
@@ -35,7 +47,12 @@ func GetFixedVA(c *gin.Context) {
 	}
 
 	client := adapter.GetXenditCli()
-	response, _ := client.VirtualAccount.GetFixedVA(&payload)
+	response, error := client.VirtualAccount.GetFixedVA(&payload)
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
+	}
 
 	adapter.GetDB().Create(&models.Va{
 		VaID:          response.ID,
@@ -60,7 +77,12 @@ func UpdateFixedVA(c *gin.Context) {
 	}
 
 	client := adapter.GetXenditCli()
-	response, _ := client.VirtualAccount.UpdateFixedVA(&payload)
+	response, error := client.VirtualAccount.UpdateFixedVA(&payload)
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
+	}
 
 	va := models.Va{VaID: payload.ID}
 	adapter.GetDB().Model(&va).Updates(models.Va{
@@ -112,7 +134,12 @@ func GetPaymentVA(c *gin.Context) {
 	}
 
 	client := adapter.GetXenditCli()
-	response, _ := client.VirtualAccount.GetPayment(&payload)
+	response, error := client.VirtualAccount.GetPayment(&payload)
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
+	}
 
 	c.JSON(http.StatusOK, response)
 }

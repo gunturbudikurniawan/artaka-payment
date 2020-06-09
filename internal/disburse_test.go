@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/lithammer/shortuuid"
 	"github.com/xendit/xendit-go/disbursement"
+	"strconv"
 	"testing"
 )
 
@@ -61,6 +62,33 @@ func TestGetDisbursementByExternalID(t *testing.T) {
 
 func TestCreateBatchDisbursement(t *testing.T) {
 	resp := CreateBatchDisbursement(createBatchDisburseParam)
+	t.Logf(resp.Status)
+	t.Logf(fmt.Sprintf("%f", resp.TotalUploadedAmount))
+
+}
+
+func TestCreateThousandBatchDisbursement(t *testing.T) {
+	const stress = 1000
+	var testingItems []disbursement.DisbursementItem
+	for i := 0; i < stress; i++ {
+		items := disbursement.DisbursementItem{
+			ExternalID:        fmt.Sprintf("DB_%s", shortuuid.New()),
+			Amount:            float64(Random(10000, 500000)),
+			BankCode:          "BCA",
+			BankAccountName:   "Naufal Ihsan",
+			BankAccountNumber: strconv.FormatInt(int64(Random(1000000000, 9999999999)), 10),
+			Description:       fmt.Sprintf("Reimbursement for payment X-%v", i),
+		}
+
+		testingItems = append(testingItems, items)
+	}
+
+	stressBatch := disbursement.CreateBatchParams{
+		Reference:     "Stress Batch",
+		Disbursements: testingItems,
+	}
+
+	resp := CreateBatchDisbursement(stressBatch)
 	t.Logf(resp.Status)
 	t.Logf(fmt.Sprintf("%f", resp.TotalUploadedAmount))
 

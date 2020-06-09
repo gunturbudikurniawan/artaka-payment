@@ -1,14 +1,13 @@
 package internal
 
 import (
-	"fmt"
-	"github.com/lithammer/shortuuid"
 	"testing"
 )
 
 var (
 	createQRISParam = CreateQRISParams{
-		ExternalID:  fmt.Sprintf("QR_%s", shortuuid.New()),
+		ExternalID: "QR_y5ukjzRjVnvfmnpFRXoAsj",
+		//ExternalID:  fmt.Sprintf("QR_%s", shortuuid.New()),
 		Type:        "DYNAMIC",
 		CallbackURL: "https://naufalihsan.co.id/payment/qris/callback",
 		Amount:      50000,

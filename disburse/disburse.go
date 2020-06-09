@@ -38,7 +38,12 @@ func GetDisbursementByExternalID(c *gin.Context) {
 	}
 
 	client := adapter.GetXenditCli()
-	response, _ := client.Disbursement.GetByExternalID(&payload)
+	response, error := client.Disbursement.GetByExternalID(&payload)
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
+	}
 
 	c.JSON(http.StatusOK, response)
 }
