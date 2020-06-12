@@ -114,3 +114,4 @@ type BatchDisbursementCallback struct {
 	TotalDisbursedAmount float64                       `json:"total_disbursed_amount" validate:"required"`
 	Disbursements        disbursement.DisbursementItem `json:"disburse,omitempty"`
 }
+

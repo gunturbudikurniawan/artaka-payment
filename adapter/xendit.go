@@ -14,7 +14,7 @@ var (
 	qrisCli          *wrapper.API
 )
 
-func Authorize() {
+func AuthorizeXendit() {
 	err := godotenv.Load()
 	if err != nil {
 		panic(err)
@@ -31,11 +31,11 @@ func Authorize() {
 
 }
 
-func GetSecretKey() string {
+func GetXenditSecretKey() string {
 	return secretKey
 }
 
-func GetAuthorizationKey() string {
+func GetXenditAuthorizationKey() string {
 	return authorizationKey
 }
 

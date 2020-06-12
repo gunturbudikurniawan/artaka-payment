@@ -34,10 +34,6 @@ func (c *Client) CreateQRISWithContext(ctx context.Context, data *CreateQRISPara
 		response,
 	)
 
-	fmt.Println(err)
-
-	fmt.Println(response)
-
 	if err != nil {
 		return nil, err
 	}
@@ -100,3 +96,4 @@ func (c *Client) SimulatePaymentWithContext(ctx context.Context, data *PaymentPa
 
 	return response, nil
 }
+

@@ -1,6 +1,8 @@
 package wrapper
 
-import "github.com/xendit/xendit-go"
+import (
+	"github.com/xendit/xendit-go"
+)
 
 type API struct {
 	opt          xendit.Option

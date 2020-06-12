@@ -3,16 +3,18 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/naufalihsan/artaka-payment/adapter"
+	"github.com/naufalihsan/artaka-payment/models"
 	"github.com/naufalihsan/artaka-payment/routers"
 )
 
 func main() {
 
-	adapter.Authorize()
+	adapter.AuthorizeXendit()
+	adapter.AuthorizeLinkAja()
 
-	//db := adapter.Connect()
-	//models.AutoMigrate()
-	//defer db.Close()
+	db := adapter.Connect()
+	models.AutoMigrate()
+	defer db.Close()
 
 	r := gin.Default()
 	r.Static("/static", "./static")
@@ -31,6 +33,11 @@ func main() {
 	disburse := payment.Group("/disbursement")
 	{
 		routers.RouterDisbursement(disburse)
+	}
+
+	linkaja := payment.Group("/linkaja")
+	{
+		routers.RouterLink(linkaja)
 	}
 
 	r.Run(":8005")

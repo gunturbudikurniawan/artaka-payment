@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/naufalihsan/artaka-payment/disburse"
+	"github.com/naufalihsan/artaka-payment/linkaja"
 	"github.com/naufalihsan/artaka-payment/qris"
 	"github.com/naufalihsan/artaka-payment/va"
 )
@@ -31,4 +32,10 @@ func RouterDisbursement(api *gin.RouterGroup) {
 	api.POST("/callback", disburse.DisbursementCallback)
 	api.POST("/batch/create", disburse.CreateBatchDisbursement)
 	api.POST("/batch/callback", disburse.BatchDisbursementCallback)
+}
+
+func RouterLink(api *gin.RouterGroup) {
+	api.POST("/generate", linkaja.GenerateDynamicQR)
+	api.POST("/callback", linkaja.InformPaymentQR)
+	api.POST("/reverse", linkaja.ReverseTransaction)
 }
