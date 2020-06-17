@@ -11,6 +11,7 @@ func main() {
 
 	adapter.AuthorizeXendit()
 	adapter.AuthorizeLinkAja()
+	adapter.AuthorizeRajaOngkir()
 
 	db := adapter.Connect()
 	models.AutoMigrate()
@@ -38,6 +39,11 @@ func main() {
 	linkaja := payment.Group("/linkaja")
 	{
 		routers.RouterLink(linkaja)
+	}
+
+	shipment := r.Group("/shipment")
+	{
+		routers.RouterShipment(shipment)
 	}
 
 	r.Run(":8005")
