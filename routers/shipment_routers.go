@@ -10,5 +10,6 @@ func RouterShipment(api *gin.RouterGroup) {
 	api.GET("/city", shipment.GetAvailableCity)
 	api.GET("/subdistrict", shipment.GetAvailableSubdistrict)
 	api.POST("/cost", shipment.CountCostEstimation)
+	api.POST("/waybill", shipment.CheckWayBill)
 
 }

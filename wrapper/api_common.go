@@ -38,6 +38,7 @@ func Call(method string, url string, header *http.Header, body interface{}, resu
 	fmt.Println(command)
 
 	response, err := client.Do(request)
+
 	if err != nil {
 		panic(err)
 	}
@@ -45,6 +46,8 @@ func Call(method string, url string, header *http.Header, body interface{}, resu
 	defer response.Body.Close()
 
 	respBody, err := ioutil.ReadAll(response.Body)
+	fmt.Println(string(respBody))
+
 	if err != nil {
 		panic(err)
 	}

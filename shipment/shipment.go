@@ -95,3 +95,21 @@ func CountCostEstimation(c *gin.Context) {
 
 	c.JSON(http.StatusOK, response)
 }
+
+func CheckWayBill(c *gin.Context) {
+	var payload wrapper.WayBillParams
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	client := adapter.GetRajaOngkirCli()
+	response, error := client.CheckWayBill(&payload)
+
+	if error != nil {
+		c.JSON(http.StatusOK, error)
+		return
+	}
+
+	c.JSON(http.StatusOK, response)
+}

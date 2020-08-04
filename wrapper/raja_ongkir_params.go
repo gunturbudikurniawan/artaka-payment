@@ -140,3 +140,76 @@ type ServiceCostItem struct {
 	Etd   string  `json:"etd,omitempty"`
 	Note  string  `json:"note,omitempty"`
 }
+
+type WayBillParams struct {
+	WayBill string `json:"waybill"`
+	Courier string `json:"courier"`
+}
+
+type WayBillBase struct {
+	RajaOngkir WayBillBody `json:"rajaongkir"`
+}
+
+type WayBillQuery struct {
+	WayBill string `json:"waybill,omitempty"`
+	Courier string `json:"courier,omitempty"`
+}
+
+type WayBillSummary struct {
+	CourierCode   string `json:"courier_code"`
+	CourierName   string `json:"courier_name"`
+	WayBillNumber string `json:"waybill_number"`
+	ServiceCode   string `json:"service_code"`
+	WayBillDate   string `json:"waybill_date"`
+	ShipperName   string `json:"shipper_name"`
+	ReceiverName  string `json:"receiver_name"`
+	Origin        string `json:"origin"`
+	Destination   string `json:"destination"`
+	Status        string `json:"status"`
+}
+
+type WayBillDetail struct {
+	WayBillNumber    string `json:"waybill_number"`
+	WayBillDate      string `json:"waybill_date"`
+	Weight           string `json:"weight"`
+	Origin           string `json:"origin"`
+	Destination      string `json:"destination"`
+	ShipperName      string `json:"shipper_name"`
+	ShipperAddress1  string `json:"shipper_address1"`
+	ShipperAddress2  string `json:"shipper_address2"`
+	ShipperAddress3  string `json:"shipper_address3"`
+	ReceiverName     string `json:"receiver_name"`
+	ReceiverAddress1 string `json:"receiver_address1"`
+	ReceiverAddress2 string `json:"receiver_address2"`
+	ReceiverAddress3 string `json:"receiver_address3"`
+	ReceiverCity     string `json:"receiver_city"`
+}
+
+type WayBillDeliveryStatus struct {
+	Status      string `json:"status"`
+	PodReceiver string `json:"pod_receiver"`
+	PodDate     string `json:"pod_date"`
+	PodTime     string `json:"pod_time"`
+}
+
+type WayBillManifestItem struct {
+	ManifestCode        string `json:"manifest_code"`
+	ManifestDescription string `json:"manifest_description"`
+	ManifestDate        string `json:"manifest_date"`
+	ManifestTime        string `json:"manifest_time"`
+	CityName            string `json:"city_name"`
+}
+
+type WayBillItem struct {
+	Delivered      bool                  `json:"delivered"`
+	Summary        WayBillSummary        `json:"summary"`
+	Details        WayBillDetail         `json:"details"`
+	DeliveryStatus WayBillDeliveryStatus `json:"delivery_status"`
+	Manifest       []WayBillManifestItem `json:"manifest"`
+}
+
+type WayBillBody struct {
+	Query  WayBillQuery   `json:"query"`
+	Status ResponseStatus `json:"status"`
+	Result WayBillItem    `json:"result"`
+}

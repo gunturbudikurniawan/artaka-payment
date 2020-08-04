@@ -151,3 +151,24 @@ func (c *ClientRajaOngkir) CountCostEstimation(data *CostEstimationParams) (*Cos
 
 	return response, nil
 }
+
+func (c *ClientRajaOngkir) CheckWayBill(data *WayBillParams) (*WayBillBase, *error) {
+	response := &WayBillBase{}
+	header := &http.Header{}
+
+	header.Set("key", c.ApiKey)
+
+	err := Call(
+		"POST",
+		fmt.Sprintf("%s/waybill", c.BaseURL),
+		header,
+		data,
+		response,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
